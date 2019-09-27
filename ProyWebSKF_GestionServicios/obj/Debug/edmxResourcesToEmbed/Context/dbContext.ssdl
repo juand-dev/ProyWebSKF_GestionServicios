@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BdSKF_GestionServiciosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CARGOS">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" />
+    <Property Name="descripcion" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="COMPRADORES">
+    <Key>
+      <PropertyRef Name="persona_id" />
+    </Key>
+    <Property Name="persona_id" Type="int" Nullable="false" />
+    <Property Name="enmail" Type="varchar" MaxLength="50" />
+    <Property Name="sexo" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="DETALLEPAQUETES">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="paquete_id" />
+      <PropertyRef Name="servicio_id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="paquete_id" Type="int" Nullable="false" />
+    <Property Name="servicio_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EMPLEADOS">
+    <Key>
+      <PropertyRef Name="persona_id" />
+    </Key>
+    <Property Name="persona_id" Type="int" Nullable="false" />
+    <Property Name="cargo_id" Type="int" Nullable="false" />
+    <Property Name="fechaIngreso" Type="date" />
+    <Property Name="fechaCese" Type="date" />
+  </EntityType>
+  <EntityType Name="PAQUETES">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="150" />
+    <Property Name="descripcion" Type="nvarchar" MaxLength="250" />
+    <Property Name="estado" Type="bit" />
+  </EntityType>
+  <EntityType Name="PERSONAS">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="100" />
+    <Property Name="apellido" Type="varchar" MaxLength="100" />
+    <Property Name="tipoDocumento_id" Type="int" Nullable="false" />
+    <Property Name="numeroDocumento" Type="varchar" MaxLength="20" />
+    <Property Name="direccion" Type="varchar" MaxLength="250" />
+    <Property Name="fechaNacimiento" Type="date" />
+    <Property Name="celular" Type="varchar" MaxLength="12" />
+    <Property Name="usuario" Type="varchar" MaxLength="20" />
+    <Property Name="contrasena" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="SERVICIOS">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="150" />
+    <Property Name="descripcion" Type="varchar" MaxLength="250" />
+    <Property Name="tipoServicio_id" Type="int" Nullable="false" />
+    <Property Name="costo" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TIPODOCUMENTOS">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcionLarga" Type="varchar" MaxLength="50" />
+    <Property Name="descripcionCorta" Type="varchar" MaxLength="20" />
+    <Property Name="longitud" Type="int" />
+  </EntityType>
+  <EntityType Name="TIPOSERVICIOS">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="acronimo" Type="varchar" MaxLength="20" />
+    <Property Name="descripcion" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <Association Name="FK_COMPRADORES_PERSONAS">
+    <End Role="PERSONAS" Type="Self.PERSONAS" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="COMPRADORES" Type="Self.COMPRADORES" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="PERSONAS">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="COMPRADORES">
+        <PropertyRef Name="persona_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EMPLEADOS_CARGOS">
+    <End Role="CARGOS" Type="Self.CARGOS" Multiplicity="1" />
+    <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CARGOS">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="EMPLEADOS">
+        <PropertyRef Name="cargo_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EMPLEADOS_PERSONAS">
+    <End Role="PERSONAS" Type="Self.PERSONAS" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="PERSONAS">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="EMPLEADOS">
+        <PropertyRef Name="persona_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERSONAS_TIPODOCUMENTOS">
+    <End Role="TIPODOCUMENTOS" Type="Self.TIPODOCUMENTOS" Multiplicity="1" />
+    <End Role="PERSONAS" Type="Self.PERSONAS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPODOCUMENTOS">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="PERSONAS">
+        <PropertyRef Name="tipoDocumento_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BdSKF_GestionServiciosModelStoreContainer">
+    <EntitySet Name="CARGOS" EntityType="Self.CARGOS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="COMPRADORES" EntityType="Self.COMPRADORES" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DETALLEPAQUETES" EntityType="Self.DETALLEPAQUETES" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EMPLEADOS" EntityType="Self.EMPLEADOS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PAQUETES" EntityType="Self.PAQUETES" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PERSONAS" EntityType="Self.PERSONAS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SERVICIOS" EntityType="Self.SERVICIOS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TIPODOCUMENTOS" EntityType="Self.TIPODOCUMENTOS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TIPOSERVICIOS" EntityType="Self.TIPOSERVICIOS" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_COMPRADORES_PERSONAS" Association="Self.FK_COMPRADORES_PERSONAS">
+      <End Role="PERSONAS" EntitySet="PERSONAS" />
+      <End Role="COMPRADORES" EntitySet="COMPRADORES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EMPLEADOS_CARGOS" Association="Self.FK_EMPLEADOS_CARGOS">
+      <End Role="CARGOS" EntitySet="CARGOS" />
+      <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EMPLEADOS_PERSONAS" Association="Self.FK_EMPLEADOS_PERSONAS">
+      <End Role="PERSONAS" EntitySet="PERSONAS" />
+      <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERSONAS_TIPODOCUMENTOS" Association="Self.FK_PERSONAS_TIPODOCUMENTOS">
+      <End Role="TIPODOCUMENTOS" EntitySet="TIPODOCUMENTOS" />
+      <End Role="PERSONAS" EntitySet="PERSONAS" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

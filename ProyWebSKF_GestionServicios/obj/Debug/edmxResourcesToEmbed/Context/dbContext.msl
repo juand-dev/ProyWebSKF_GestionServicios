@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BdSKF_GestionServiciosModelStoreContainer" CdmEntityContainer="BdSKF_GestionServiciosEntities2">
+    <EntitySetMapping Name="CARGOS">
+      <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.CARGO">
+        <MappingFragment StoreEntitySet="CARGOS">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="COMPRADORES">
+      <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.COMPRADORE">
+        <MappingFragment StoreEntitySet="COMPRADORES">
+          <ScalarProperty Name="persona_id" ColumnName="persona_id" />
+          <ScalarProperty Name="enmail" ColumnName="enmail" />
+          <ScalarProperty Name="sexo" ColumnName="sexo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DETALLEPAQUETES">
+      <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.DETALLEPAQUETE">
+        <MappingFragment StoreEntitySet="DETALLEPAQUETES">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="paquete_id" ColumnName="paquete_id" />
+          <ScalarProperty Name="servicio_id" ColumnName="servicio_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EMPLEADOS">
+      <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.EMPLEADO">
+        <MappingFragment StoreEntitySet="EMPLEADOS">
+          <ScalarProperty Name="persona_id" ColumnName="persona_id" />
+          <ScalarProperty Name="cargo_id" ColumnName="cargo_id" />
+          <ScalarProperty Name="fechaIngreso" ColumnName="fechaIngreso" />
+          <ScalarProperty Name="fechaCese" ColumnName="fechaCese" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PAQUETES">
+      <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.PAQUETE">
+        <MappingFragment StoreEntitySet="PAQUETES">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PERSONAS">
+      <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.PERSONA">
+        <MappingFragment StoreEntitySet="PERSONAS">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+          <ScalarProperty Name="tipoDocumento_id" ColumnName="tipoDocumento_id" />
+          <ScalarProperty Name="numeroDocumento" ColumnName="numeroDocumento" />
+          <ScalarProperty Name="direccion" ColumnName="direccion" />
+          <ScalarProperty Name="fechaNacimiento" ColumnName="fechaNacimiento" />
+          <ScalarProperty Name="celular" ColumnName="celular" />
+          <ScalarProperty Name="usuario" ColumnName="usuario" />
+          <ScalarProperty Name="contrasena" ColumnName="contrasena" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SERVICIOS">
+      <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.SERVICIO">
+        <MappingFragment StoreEntitySet="SERVICIOS">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="tipoServicio_id" ColumnName="tipoServicio_id" />
+          <ScalarProperty Name="costo" ColumnName="costo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TIPODOCUMENTOS">
+      <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.TIPODOCUMENTO">
+        <MappingFragment StoreEntitySet="TIPODOCUMENTOS">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="descripcionLarga" ColumnName="descripcionLarga" />
+          <ScalarProperty Name="descripcionCorta" ColumnName="descripcionCorta" />
+          <ScalarProperty Name="longitud" ColumnName="longitud" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TIPOSERVICIOS">
+      <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.TIPOSERVICIO">
+        <MappingFragment StoreEntitySet="TIPOSERVICIOS">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="acronimo" ColumnName="acronimo" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

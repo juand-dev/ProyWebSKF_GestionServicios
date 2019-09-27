@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ProyWebSKF_GestionServicios.Context.SERVICIO>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Servicios</h2>
+
+<div class="form-group pull-right">
+    <p class="btn btn-default">
+        @Html.ActionLink("Nuevo Servicios", "Create")
+    </p>
+</div>      
+<table class="table">
+    <tr>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Acronimo
+        </th>
+        <th>
+            Descripcion
+        </th>
+        <th>
+            Costo
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TIPOSERVICIO.acronimo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.descripcion)
+        </td>
+        <td>
+            S/ @Html.DisplayFor(modelItem => item.costo)
+        </td>
+        
+        <td>
+            <p class="btn btn-success">@Html.ActionLink("Ver", "Details", new { id = item.id })</p> |
+            <p class="btn btn-danger"> @Html.ActionLink("Editar", "Edit", new { id = item.id })</p> |            
+            <p class="btn btn-primary">@Html.ActionLink("Eliminar", "Delete", new { id = item.id }, new { @class = "my-class" })</p>
+        </td>        
+    </tr>    
+}
+    <style>
+        a.my-class {
+            color: #333333;
+        }
+
+            a.my-class:active {
+                color: #666666;
+            }
+
+            a.my-class:link {
+                color: #999999;
+            }
+
+            a.my-class:visited {
+                color: #CCCCCC;
+            }
+    </style>
+</table>

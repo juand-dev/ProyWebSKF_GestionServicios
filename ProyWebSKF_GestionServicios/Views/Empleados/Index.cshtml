@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ProyWebSKF_GestionServicios.Context.EMPLEADO>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Empleados</h2>
+<div class="form-group pull-right">
+    <p class="btn btn-default">
+        @Html.ActionLink("Nuevo Empleado", "Create")
+    </p>
+</div>       
+<table class="table">
+    <tr>
+        <th>
+            Nombres
+        </th>
+        <th>
+            Apellidos
+        </th>        
+        <th>
+            @Html.DisplayNameFor(model => model.CARGO.nombre)
+        </th>
+        <th>
+            Fecha Ingreso
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PERSONA.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PERSONA.apellido)
+        </td>              
+        <td>
+            @Html.DisplayFor(modelItem => item.CARGO.nombre)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.fechaIngreso)*@
+            @Convert.ToDateTime(item.fechaIngreso).ToString("dd/MM/yyyy") 
+        </td>                  
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.persona_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.persona_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.persona_id })
+        </td>
+    </tr>
+}
+
+</table>

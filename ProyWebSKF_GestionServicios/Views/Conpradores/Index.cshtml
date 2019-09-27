@@ -1,0 +1,61 @@
+﻿@model IEnumerable<ProyWebSKF_GestionServicios.Context.COMPRADORE>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Compradores</h2>
+
+<div class="form-group pull-right">
+    <p class="btn btn-default">
+        @Html.ActionLink("Nuevo Comprador", "Create")
+    </p>
+</div>  
+<table class="table">
+    <tr>
+        <th>
+            Nombres
+        </th>
+        <th>
+            Apellidos
+        </th>
+        <th>
+            DNI
+        </th>
+        <th>
+            Celular
+        </th>
+        <th>
+            Correo Electronico
+        </th>               
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PERSONA.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PERSONA.apellido)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PERSONA.numeroDocumento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PERSONA.celular)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.enmail)
+        </td>
+              
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.persona_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.persona_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.persona_id })
+        </td>
+    </tr>
+}
+
+</table>

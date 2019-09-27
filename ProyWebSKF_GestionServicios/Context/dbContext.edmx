@@ -1,0 +1,560 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BdSKF_GestionServiciosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CARGOS">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="descripcion" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="COMPRADORES">
+          <Key>
+            <PropertyRef Name="persona_id" />
+          </Key>
+          <Property Name="persona_id" Type="int" Nullable="false" />
+          <Property Name="enmail" Type="varchar" MaxLength="50" />
+          <Property Name="sexo" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="DETALLEPAQUETES">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="paquete_id" />
+            <PropertyRef Name="servicio_id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="paquete_id" Type="int" Nullable="false" />
+          <Property Name="servicio_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EMPLEADOS">
+          <Key>
+            <PropertyRef Name="persona_id" />
+          </Key>
+          <Property Name="persona_id" Type="int" Nullable="false" />
+          <Property Name="cargo_id" Type="int" Nullable="false" />
+          <Property Name="fechaIngreso" Type="date" />
+          <Property Name="fechaCese" Type="date" />
+        </EntityType>
+        <EntityType Name="PAQUETES">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="150" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="250" />
+          <Property Name="estado" Type="bit" />
+        </EntityType>
+        <EntityType Name="PERSONAS">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="apellido" Type="varchar" MaxLength="100" />
+          <Property Name="tipoDocumento_id" Type="int" Nullable="false" />
+          <Property Name="numeroDocumento" Type="varchar" MaxLength="20" />
+          <Property Name="direccion" Type="varchar" MaxLength="250" />
+          <Property Name="fechaNacimiento" Type="date" />
+          <Property Name="celular" Type="varchar" MaxLength="12" />
+          <Property Name="usuario" Type="varchar" MaxLength="20" />
+          <Property Name="contrasena" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="SERVICIOS">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="150" />
+          <Property Name="descripcion" Type="varchar" MaxLength="250" />
+          <Property Name="tipoServicio_id" Type="int" Nullable="false" />
+          <Property Name="costo" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TIPODOCUMENTOS">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcionLarga" Type="varchar" MaxLength="50" />
+          <Property Name="descripcionCorta" Type="varchar" MaxLength="20" />
+          <Property Name="longitud" Type="int" />
+        </EntityType>
+        <EntityType Name="TIPOSERVICIOS">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="acronimo" Type="varchar" MaxLength="20" />
+          <Property Name="descripcion" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <Association Name="FK_COMPRADORES_PERSONAS">
+          <End Role="PERSONAS" Type="Self.PERSONAS" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="COMPRADORES" Type="Self.COMPRADORES" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PERSONAS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="COMPRADORES">
+              <PropertyRef Name="persona_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLEADOS_CARGOS">
+          <End Role="CARGOS" Type="Self.CARGOS" Multiplicity="1" />
+          <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARGOS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EMPLEADOS">
+              <PropertyRef Name="cargo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLEADOS_PERSONAS">
+          <End Role="PERSONAS" Type="Self.PERSONAS" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PERSONAS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EMPLEADOS">
+              <PropertyRef Name="persona_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PERSONAS_TIPODOCUMENTOS">
+          <End Role="TIPODOCUMENTOS" Type="Self.TIPODOCUMENTOS" Multiplicity="1" />
+          <End Role="PERSONAS" Type="Self.PERSONAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPODOCUMENTOS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PERSONAS">
+              <PropertyRef Name="tipoDocumento_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BdSKF_GestionServiciosModelStoreContainer">
+          <EntitySet Name="CARGOS" EntityType="Self.CARGOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="COMPRADORES" EntityType="Self.COMPRADORES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DETALLEPAQUETES" EntityType="Self.DETALLEPAQUETES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EMPLEADOS" EntityType="Self.EMPLEADOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PAQUETES" EntityType="Self.PAQUETES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PERSONAS" EntityType="Self.PERSONAS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SERVICIOS" EntityType="Self.SERVICIOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TIPODOCUMENTOS" EntityType="Self.TIPODOCUMENTOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TIPOSERVICIOS" EntityType="Self.TIPOSERVICIOS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_COMPRADORES_PERSONAS" Association="Self.FK_COMPRADORES_PERSONAS">
+            <End Role="PERSONAS" EntitySet="PERSONAS" />
+            <End Role="COMPRADORES" EntitySet="COMPRADORES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLEADOS_CARGOS" Association="Self.FK_EMPLEADOS_CARGOS">
+            <End Role="CARGOS" EntitySet="CARGOS" />
+            <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLEADOS_PERSONAS" Association="Self.FK_EMPLEADOS_PERSONAS">
+            <End Role="PERSONAS" EntitySet="PERSONAS" />
+            <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PERSONAS_TIPODOCUMENTOS" Association="Self.FK_PERSONAS_TIPODOCUMENTOS">
+            <End Role="TIPODOCUMENTOS" EntitySet="TIPODOCUMENTOS" />
+            <End Role="PERSONAS" EntitySet="PERSONAS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BdSKF_GestionServiciosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CARGO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EMPLEADOS" Relationship="Self.FK_EMPLEADOS_CARGOS" FromRole="CARGOS" ToRole="EMPLEADOS" />
+        </EntityType>
+        <EntityType Name="COMPRADORE">
+          <Key>
+            <PropertyRef Name="persona_id" />
+          </Key>
+          <Property Name="persona_id" Type="Int32" Nullable="false" />
+          <Property Name="enmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sexo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PERSONA" Relationship="Self.FK_COMPRADORES_PERSONAS" FromRole="COMPRADORES" ToRole="PERSONAS" />
+        </EntityType>
+        <EntityType Name="DETALLEPAQUETE">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="paquete_id" />
+            <PropertyRef Name="servicio_id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="paquete_id" Type="Int32" Nullable="false" />
+          <Property Name="servicio_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SERVICIO" Relationship="BdSKF_GestionServiciosModel.SERVICIODETALLEPAQUETE" FromRole="DETALLEPAQUETE" ToRole="SERVICIO" />
+          <NavigationProperty Name="PAQUETE" Relationship="BdSKF_GestionServiciosModel.PAQUETEDETALLEPAQUETE" FromRole="DETALLEPAQUETE" ToRole="PAQUETE" />
+        </EntityType>
+        <EntityType Name="EMPLEADO">
+          <Key>
+            <PropertyRef Name="persona_id" />
+          </Key>
+          <Property Name="persona_id" Type="Int32" Nullable="false" />
+          <Property Name="cargo_id" Type="Int32" Nullable="false" />
+          <Property Name="fechaIngreso" Type="DateTime" Precision="0" />
+          <Property Name="fechaCese" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CARGO" Relationship="Self.FK_EMPLEADOS_CARGOS" FromRole="EMPLEADOS" ToRole="CARGOS" />
+          <NavigationProperty Name="PERSONA" Relationship="Self.FK_EMPLEADOS_PERSONAS" FromRole="EMPLEADOS" ToRole="PERSONAS" />
+        </EntityType>
+        <EntityType Name="PAQUETE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="estado" Type="Boolean" />
+          <NavigationProperty Name="DETALLEPAQUETEs" Relationship="BdSKF_GestionServiciosModel.PAQUETEDETALLEPAQUETE" FromRole="PAQUETE" ToRole="DETALLEPAQUETE" />
+        </EntityType>
+        <EntityType Name="PERSONA">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="tipoDocumento_id" Type="Int32" Nullable="false" />
+          <Property Name="numeroDocumento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="direccion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="fechaNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="celular" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="contrasena" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="COMPRADORE" Relationship="Self.FK_COMPRADORES_PERSONAS" FromRole="PERSONAS" ToRole="COMPRADORES" />
+          <NavigationProperty Name="EMPLEADO" Relationship="Self.FK_EMPLEADOS_PERSONAS" FromRole="PERSONAS" ToRole="EMPLEADOS" />
+          <NavigationProperty Name="TIPODOCUMENTO" Relationship="Self.FK_PERSONAS_TIPODOCUMENTOS" FromRole="PERSONAS" ToRole="TIPODOCUMENTOS" />
+        </EntityType>
+        <EntityType Name="SERVICIO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="tipoServicio_id" Type="Int32" Nullable="false" />
+          <Property Name="costo" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="TIPOSERVICIO" Relationship="BdSKF_GestionServiciosModel.TIPOSERVICIOSERVICIO" FromRole="SERVICIO" ToRole="TIPOSERVICIO" />
+          <NavigationProperty Name="DETALLEPAQUETEs" Relationship="BdSKF_GestionServiciosModel.SERVICIODETALLEPAQUETE" FromRole="SERVICIO" ToRole="DETALLEPAQUETE" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TIPODOCUMENTO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcionLarga" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripcionCorta" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="longitud" Type="Int32" />
+          <NavigationProperty Name="PERSONAS" Relationship="Self.FK_PERSONAS_TIPODOCUMENTOS" FromRole="TIPODOCUMENTOS" ToRole="PERSONAS" />
+        </EntityType>
+        <EntityType Name="TIPOSERVICIO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="acronimo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SERVICIOs" Relationship="BdSKF_GestionServiciosModel.TIPOSERVICIOSERVICIO" FromRole="TIPOSERVICIO" ToRole="SERVICIO" />
+        </EntityType>
+        <Association Name="FK_EMPLEADOS_CARGOS">
+          <End Role="CARGOS" Type="Self.CARGO" Multiplicity="1" />
+          <End Role="EMPLEADOS" Type="Self.EMPLEADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARGOS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EMPLEADOS">
+              <PropertyRef Name="cargo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_COMPRADORES_PERSONAS">
+          <End Role="PERSONAS" Type="Self.PERSONA" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="COMPRADORES" Type="Self.COMPRADORE" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PERSONAS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="COMPRADORES">
+              <PropertyRef Name="persona_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLEADOS_PERSONAS">
+          <End Role="PERSONAS" Type="Self.PERSONA" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EMPLEADOS" Type="Self.EMPLEADO" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PERSONAS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EMPLEADOS">
+              <PropertyRef Name="persona_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PERSONAS_TIPODOCUMENTOS">
+          <End Role="TIPODOCUMENTOS" Type="Self.TIPODOCUMENTO" Multiplicity="1" />
+          <End Role="PERSONAS" Type="Self.PERSONA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPODOCUMENTOS">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PERSONAS">
+              <PropertyRef Name="tipoDocumento_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BdSKF_GestionServiciosEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CARGOS" EntityType="Self.CARGO" />
+          <EntitySet Name="COMPRADORES" EntityType="Self.COMPRADORE" />
+          <EntitySet Name="DETALLEPAQUETES" EntityType="Self.DETALLEPAQUETE" />
+          <EntitySet Name="EMPLEADOS" EntityType="Self.EMPLEADO" />
+          <EntitySet Name="PAQUETES" EntityType="Self.PAQUETE" />
+          <EntitySet Name="PERSONAS" EntityType="Self.PERSONA" />
+          <EntitySet Name="SERVICIOS" EntityType="Self.SERVICIO" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="TIPODOCUMENTOS" EntityType="Self.TIPODOCUMENTO" />
+          <EntitySet Name="TIPOSERVICIOS" EntityType="Self.TIPOSERVICIO" />
+          <AssociationSet Name="FK_EMPLEADOS_CARGOS" Association="Self.FK_EMPLEADOS_CARGOS">
+            <End Role="CARGOS" EntitySet="CARGOS" />
+            <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_COMPRADORES_PERSONAS" Association="Self.FK_COMPRADORES_PERSONAS">
+            <End Role="PERSONAS" EntitySet="PERSONAS" />
+            <End Role="COMPRADORES" EntitySet="COMPRADORES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLEADOS_PERSONAS" Association="Self.FK_EMPLEADOS_PERSONAS">
+            <End Role="PERSONAS" EntitySet="PERSONAS" />
+            <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PERSONAS_TIPODOCUMENTOS" Association="Self.FK_PERSONAS_TIPODOCUMENTOS">
+            <End Role="TIPODOCUMENTOS" EntitySet="TIPODOCUMENTOS" />
+            <End Role="PERSONAS" EntitySet="PERSONAS" />
+          </AssociationSet>
+          <AssociationSet Name="TIPOSERVICIOSERVICIO" Association="BdSKF_GestionServiciosModel.TIPOSERVICIOSERVICIO">
+            <End Role="TIPOSERVICIO" EntitySet="TIPOSERVICIOS" />
+            <End Role="SERVICIO" EntitySet="SERVICIOS" />
+          </AssociationSet>
+          <AssociationSet Name="SERVICIODETALLEPAQUETE" Association="BdSKF_GestionServiciosModel.SERVICIODETALLEPAQUETE">
+            <End Role="SERVICIO" EntitySet="SERVICIOS" />
+            <End Role="DETALLEPAQUETE" EntitySet="DETALLEPAQUETES" />
+          </AssociationSet>
+          <AssociationSet Name="PAQUETEDETALLEPAQUETE" Association="BdSKF_GestionServiciosModel.PAQUETEDETALLEPAQUETE">
+            <End Role="PAQUETE" EntitySet="PAQUETES" />
+            <End Role="DETALLEPAQUETE" EntitySet="DETALLEPAQUETES" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="TIPOSERVICIOSERVICIO">
+          <End Type="BdSKF_GestionServiciosModel.TIPOSERVICIO" Role="TIPOSERVICIO" Multiplicity="1" />
+          <End Type="BdSKF_GestionServiciosModel.SERVICIO" Role="SERVICIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPOSERVICIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SERVICIO">
+              <PropertyRef Name="tipoServicio_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SERVICIODETALLEPAQUETE">
+          <End Type="BdSKF_GestionServiciosModel.SERVICIO" Role="SERVICIO" Multiplicity="1" />
+          <End Type="BdSKF_GestionServiciosModel.DETALLEPAQUETE" Role="DETALLEPAQUETE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SERVICIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DETALLEPAQUETE">
+              <PropertyRef Name="servicio_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PAQUETEDETALLEPAQUETE">
+          <End Type="BdSKF_GestionServiciosModel.PAQUETE" Role="PAQUETE" Multiplicity="1" />
+          <End Type="BdSKF_GestionServiciosModel.DETALLEPAQUETE" Role="DETALLEPAQUETE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PAQUETE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DETALLEPAQUETE">
+              <PropertyRef Name="paquete_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BdSKF_GestionServiciosModelStoreContainer" CdmEntityContainer="BdSKF_GestionServiciosEntities2">
+          <EntitySetMapping Name="CARGOS">
+            <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.CARGO">
+              <MappingFragment StoreEntitySet="CARGOS">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="COMPRADORES">
+            <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.COMPRADORE">
+              <MappingFragment StoreEntitySet="COMPRADORES">
+                <ScalarProperty Name="persona_id" ColumnName="persona_id" />
+                <ScalarProperty Name="enmail" ColumnName="enmail" />
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DETALLEPAQUETES">
+            <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.DETALLEPAQUETE">
+              <MappingFragment StoreEntitySet="DETALLEPAQUETES">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="paquete_id" ColumnName="paquete_id" />
+                <ScalarProperty Name="servicio_id" ColumnName="servicio_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLEADOS">
+            <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.EMPLEADO">
+              <MappingFragment StoreEntitySet="EMPLEADOS">
+                <ScalarProperty Name="persona_id" ColumnName="persona_id" />
+                <ScalarProperty Name="cargo_id" ColumnName="cargo_id" />
+                <ScalarProperty Name="fechaIngreso" ColumnName="fechaIngreso" />
+                <ScalarProperty Name="fechaCese" ColumnName="fechaCese" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PAQUETES">
+            <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.PAQUETE">
+              <MappingFragment StoreEntitySet="PAQUETES">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERSONAS">
+            <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.PERSONA">
+              <MappingFragment StoreEntitySet="PERSONAS">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="tipoDocumento_id" ColumnName="tipoDocumento_id" />
+                <ScalarProperty Name="numeroDocumento" ColumnName="numeroDocumento" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="fechaNacimiento" ColumnName="fechaNacimiento" />
+                <ScalarProperty Name="celular" ColumnName="celular" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="contrasena" ColumnName="contrasena" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SERVICIOS">
+            <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.SERVICIO">
+              <MappingFragment StoreEntitySet="SERVICIOS">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="tipoServicio_id" ColumnName="tipoServicio_id" />
+                <ScalarProperty Name="costo" ColumnName="costo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPODOCUMENTOS">
+            <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.TIPODOCUMENTO">
+              <MappingFragment StoreEntitySet="TIPODOCUMENTOS">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="descripcionLarga" ColumnName="descripcionLarga" />
+                <ScalarProperty Name="descripcionCorta" ColumnName="descripcionCorta" />
+                <ScalarProperty Name="longitud" ColumnName="longitud" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPOSERVICIOS">
+            <EntityTypeMapping TypeName="BdSKF_GestionServiciosModel.TIPOSERVICIO">
+              <MappingFragment StoreEntitySet="TIPOSERVICIOS">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="acronimo" ColumnName="acronimo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
